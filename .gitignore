@@ -1,0 +1,9 @@
+.build/
+.out/
+.bin/
+
+.vscode/
+.ccls-cache/
+.vs/
+.idea/
+CMakePresets.json

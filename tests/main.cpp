@@ -1,13 +1,21 @@
-#include "curl/curl.h"
+#include "simdjson.h"
+
+using namespace simdjson;
 
 int main(int argc, char** argv) {
-    curl_global_init(CURL_GLOBAL_DEFAULT);
-    CURL* curl = curl_easy_init();
-    auto res = curl_easy_setopt(curl, CURLOPT_URL, "https://dummyjson.com/products");
-    if (res != CURLE_OK) {
-        fprintf(stderr, "something went wrong");
-        return 1;
+    std::string a = "abcd";    
+    padded_string padded(a);
+    ondemand::parser parser;
+    try {
+
+        ondemand::document doc = parser.iterate(padded);
+        std::string_view res = doc["notasldfk"].get_string();
     }
+    catch (const std::exception& e) {
+        std::cerr << "error: " << e.what() << "\n";
+    }
+    
+
 
     return 0;
 }

@@ -1,9 +1,10 @@
-.build/
-.out/
-.bin/
+build/
+out/
+bin/
 
 .vscode/
 .ccls-cache/
 .vs/
 .idea/
 CMakePresets.json
+compile_commands.json

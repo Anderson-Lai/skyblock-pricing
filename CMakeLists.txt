@@ -17,11 +17,12 @@ FetchContent_MakeAvailable(simdjson)
 
 find_package(CURL REQUIRED)
 
-
 add_executable(${PROJECT_NAME}
     "${CMAKE_SOURCE_DIR}/tests/main.cpp"
 # add_library(${PROJECT_NAME}
     "${CMAKE_SOURCE_DIR}/src/api.cpp"
+    "${CMAKE_SOURCE_DIR}/src/conversions.cpp"
+    "${CMAKE_SOURCE_DIR}/src/log.cpp"
 )
 
 target_include_directories(${PROJECT_NAME}
@@ -32,6 +33,12 @@ target_include_directories(${PROJECT_NAME}
         "${CMAKE_SOURCE_DIR}/include/private/"
 )
 
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    target_compile_options(${PROJECT_NAME} PUBLIC 
+            $<$<CONFIG:Debug>:-ggdb -pthread>
+            $<$<CONFIG:Release>:-O3 -s -pthread>
+        )
+endif()
 
 target_link_libraries(${PROJECT_NAME} 
     PUBLIC 

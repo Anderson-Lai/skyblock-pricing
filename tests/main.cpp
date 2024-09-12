@@ -1,21 +1,15 @@
-#include "simdjson.h"
+#include "api.h"
+#include "conversions.h"
+#include <iostream>
 
-using namespace simdjson;
+int main(int argc, char** argv)
+{
+    std::setlocale(LC_ALL, "en_US.utf8");
+    curl_global_init(CURL_GLOBAL_DEFAULT);
 
-int main(int argc, char** argv) {
-    std::string a = "abcd";    
-    padded_string padded(a);
-    ondemand::parser parser;
-    try {
+    Api caller("https://api.hypixel.net/v2/skyblock/auctions?page=0");
+    std::cout << Conversions::ToNarrowString(caller.Call()) << "\n";
 
-        ondemand::document doc = parser.iterate(padded);
-        std::string_view res = doc["notasldfk"].get_string();
-    }
-    catch (const std::exception& e) {
-        std::cerr << "error: " << e.what() << "\n";
-    }
-    
-
-
+    curl_global_cleanup();
     return 0;
 }

@@ -8,6 +8,15 @@ void PricingLibrary::Initialize()
     std::setlocale(LC_ALL, "en_US.utf8");
 }
 
+namespace PricingLibrary
+{
+    static std::vector<std::unique_ptr<Item>> flips;
+}
+std::vector<std::unique_ptr<Item>>& PricingLibrary::GetFlips()
+{
+    return flips; 
+}
+
 void PricingLibrary::CleanUp()
 {
     curl_global_cleanup();

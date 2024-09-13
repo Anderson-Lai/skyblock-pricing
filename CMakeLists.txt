@@ -42,7 +42,7 @@ if (MSVC)
         )
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     target_compile_options(${PROJECT_NAME} PUBLIC 
-            $<$<CONFIG:Debug>:-ggdb -pthread>
+            $<$<CONFIG:Debug>:-ggdb -pthread -Wall -Wpedantic -Wextra>
             $<$<CONFIG:Release>:-O3 -s -pthread>
         )
 else ()

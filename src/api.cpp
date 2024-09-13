@@ -2,8 +2,7 @@
 #include "log.h"
 #include "conversions.h"
 
-Api::Api(std::string&& url) : m_url(std::move(url)), 
-    m_curl(curl_easy_init()) 
+Api::Api(const char* url) : m_curl(curl_easy_init()) 
 {
     if (!m_curl)
     {
@@ -25,7 +24,7 @@ Api::Api(std::string&& url) : m_url(std::move(url)),
         return;
     }
 
-    m_result = curl_easy_setopt(m_curl, CURLOPT_URL, m_url.c_str());
+    m_result = curl_easy_setopt(m_curl, CURLOPT_URL, url);
     if (m_result != CURLE_OK)
     {
         Log::Error("Error setting url for CURL*");
@@ -64,29 +63,28 @@ Api::~Api()
 
 size_t Api::WriteReponse(void* responseData, size_t elementSize, size_t elementCount, void* buffer)
 {
-    std::wstring* buf = static_cast<std::wstring*>(buffer);
+    std::string* buff = static_cast<std::string*>(buffer);
     const char* response = reinterpret_cast<const char*>(responseData);
     size_t responseSize = elementSize * elementCount;
 
-    buf->append(Conversions::ToWideString(response));
+    buff->append(response, responseSize);
     return responseSize;
 }
 
-std::wstring& Api::Call(std::string&& url)
+std::string& Api::Call(const char* url)
 {
-    this->m_url = std::move(url);
-    m_result = curl_easy_setopt(m_curl, CURLOPT_URL, m_url.c_str());
+    m_result = curl_easy_setopt(m_curl, CURLOPT_URL, url);
     if (m_result != CURLE_OK)
     {
         Log::Error("Failed to change url for api call");
-        m_buffer = L"";
+        m_buffer = "";
         return m_buffer;
     }
 
     return this->Call();
 }
 
-std::wstring& Api::Call()
+std::string& Api::Call()
 {
     m_buffer.clear();
 
@@ -94,7 +92,7 @@ std::wstring& Api::Call()
     if (m_result != CURLE_OK)
     {
         Log::Error("Failed to call api");
-        m_buffer = L"";
+        m_buffer = "";
     }
 
     return m_buffer;

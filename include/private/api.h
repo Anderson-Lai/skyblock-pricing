@@ -5,15 +5,14 @@
 class Api 
 {
 public:
-    Api(std::string&& url);
+    Api(const char* url);
     ~Api();
-    std::wstring& Call();
-    std::wstring& Call(std::string&& url);
+    std::string& Call();
+    std::string& Call(const char* url);
 private:
     static size_t WriteReponse(void* reponseData, size_t elementSize, size_t elementCount, void* buffer);
 private:
     CURL* m_curl; 
     CURLcode m_result;
-    std::wstring m_buffer;
-    std::string m_url;
+    std::string m_buffer;
 };

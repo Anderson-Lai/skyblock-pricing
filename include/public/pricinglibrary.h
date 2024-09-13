@@ -6,6 +6,6 @@
 namespace PricingLibrary
 {
     void Initialize();
-    std::vector<std::unique_ptr<Item>>& GetFlips();
+    const std::vector<std::unique_ptr<Item>>& GetFlips();
     void CleanUp();
 }

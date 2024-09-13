@@ -10,9 +10,10 @@ void PricingLibrary::Initialize()
 
 namespace PricingLibrary
 {
-    static std::vector<std::unique_ptr<Item>> flips;
+    inline std::vector<std::unique_ptr<Item>> flips;
 }
-std::vector<std::unique_ptr<Item>>& PricingLibrary::GetFlips()
+
+const std::vector<std::unique_ptr<Item>>& PricingLibrary::GetFlips()
 {
     return flips; 
 }

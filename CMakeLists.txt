@@ -19,10 +19,11 @@ find_package(CURL REQUIRED)
 
 add_executable(${PROJECT_NAME}
     "${CMAKE_SOURCE_DIR}/tests/main.cpp"
-# add_library(${PROJECT_NAME}
+# add_library(${PROJECT_NAME} SHARED
     "${CMAKE_SOURCE_DIR}/src/api.cpp"
     "${CMAKE_SOURCE_DIR}/src/conversions.cpp"
     "${CMAKE_SOURCE_DIR}/src/log.cpp"
+    "${CMAKE_SOURCE_DIR}/src/pricinglibrary.cpp"
 )
 
 target_include_directories(${PROJECT_NAME}
@@ -33,11 +34,18 @@ target_include_directories(${PROJECT_NAME}
         "${CMAKE_SOURCE_DIR}/include/private/"
 )
 
-if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+if (MSVC) 
+    target_compile_options(${PROJECT_NAME} PUBLIC
+            $<$<CONFIG:Debug>:/MDd>
+            $<$<CONFIG:Release>:/MD>
+        )
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     target_compile_options(${PROJECT_NAME} PUBLIC 
             $<$<CONFIG:Debug>:-ggdb -pthread>
             $<$<CONFIG:Release>:-O3 -s -pthread>
         )
+else ()
+    message(FATAL_ERROR "Your compiler is not supported")
 endif()
 
 target_link_libraries(${PROJECT_NAME} 

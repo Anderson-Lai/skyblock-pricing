@@ -17,7 +17,12 @@ void PricingLibrary::Run()
 
     while (true)
     {
+        const auto callBegin = Timing::Now();
         std::string& response = caller.Call();
+        const auto callEnd = Timing::Now();
+
+        std::cout << "Calling api: ";
+        Timing::Log(callBegin, callEnd);
 
         simdjson::ondemand::parser parser;
         simdjson::padded_string jsonString(response);

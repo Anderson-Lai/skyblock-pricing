@@ -3,6 +3,6 @@
 
 namespace Log
 {
-    void Println(const std::string& message);
-    void Error(const std::string& error);
+    void Println(const std::string& message = "");
+    void Error(const std::string& error = "");
 }

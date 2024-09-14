@@ -1,6 +1,6 @@
 #include "pricinglibrary.h"
 
-int main(int argc, char** argv)
+int main()
 {
     PricingLibrary::Initialize();
     PricingLibrary::Run();

@@ -14,7 +14,7 @@
 - Curl
 
 Installing curl on debian-based Linux distros:  
-```sh
+``` sh
 sudo apt install libcurl4-openssl-dev
 ```
 

@@ -15,6 +15,7 @@ void PricingLibrary::Initialize()
 void PricingLibrary::Run()
 {
     Api caller("https://api.hypixel.net/v2/skyblock/auctions?page=0");
+    const std::string fileName = "lbin.json";
 
     while (true)
     {

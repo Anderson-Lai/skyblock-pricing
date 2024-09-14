@@ -31,5 +31,5 @@ cd scripts
 ```
 ## Licenses
 
-This project is licensed under the Apache 2.0 License. Further information can be found in the [NOTICE](/NOTICE.md) file, and the licenses of the
-libraries linked against can be found in the [LICENSES](/LICENSES) directory.
+This project is licensed under the Apache 2.0 License, and the licenses of libraries linked against can be found in the [LICENSES](/LICENSES)
+directory. Further information can be found in the [NOTICE.md](/NOTICE.md) file.

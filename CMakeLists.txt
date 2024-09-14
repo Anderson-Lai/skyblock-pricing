@@ -19,7 +19,7 @@ find_package(CURL REQUIRED)
 
 add_executable(${PROJECT_NAME}
     "${CMAKE_SOURCE_DIR}/tests/main.cpp"
-# add_library(${PROJECT_NAME} SHARED
+# add_library(${PROJECT_NAME} STATIC
     "${CMAKE_SOURCE_DIR}/src/api.cpp"
     "${CMAKE_SOURCE_DIR}/src/conversions.cpp"
     "${CMAKE_SOURCE_DIR}/src/log.cpp"

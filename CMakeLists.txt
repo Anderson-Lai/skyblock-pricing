@@ -48,7 +48,7 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "
         )
 else ()
     message(FATAL_ERROR "Your compiler is not supported")
-endif()
+endif ()
 
 target_link_libraries(${PROJECT_NAME} 
     PUBLIC 

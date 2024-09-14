@@ -3,8 +3,8 @@
 #include <clocale>
 #include "api.h"
 #include "log.h"
-#include "simdjson.h"
 #include "timing.h"
+#include "json.h"
 
 void PricingLibrary::Initialize()
 {
@@ -26,17 +26,14 @@ void PricingLibrary::Run()
         Timing::Log(callBegin, callEnd);
         
         const auto setupBegin = Timing::Now();
-        simdjson::ondemand::parser parser;
-        simdjson::padded_string jsonString(response);
-        simdjson::ondemand::document doc = parser.iterate(jsonString);
-        simdjson::ondemand::object jsonObject = doc.get_object();
+        Json json = Json(response);
         const auto setupEnd = Timing::Now();
 
         std::cout << "Setting up: ";
         Timing::Log(setupBegin, setupEnd);
 
         const auto arrayGetBegin = Timing::Now();
-        simdjson::ondemand::array auctions = jsonObject["auctions"].get_array();
+        simdjson::ondemand::array auctions = json.GetObject()["auctions"].get_array();
         const auto arrayGetEnd = Timing::Now();
 
         std::cout << "Getting array: ";

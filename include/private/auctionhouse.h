@@ -10,6 +10,7 @@ class AuctionHouse
     long long LookupPrice(const std::wstring& itemName) const;
     void ScrapeAuction();
     void ReadFileData(const std::string& fileName);
+    const std::unordered_map<std::wstring, long long>& GetPrices() const;
 private:
     std::unordered_map<std::wstring, 
         std::priority_queue<long long, std::vector<long long>, std::greater<long long>>> m_averages;

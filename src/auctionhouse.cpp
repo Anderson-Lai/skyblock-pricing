@@ -18,3 +18,8 @@ void AuctionHouse::ReadFileData(const std::string& fileName)
 {
 
 }
+
+const std::unordered_map<std::wstring, long long>& AuctionHouse::GetPrices() const
+{
+    return m_prices;
+}

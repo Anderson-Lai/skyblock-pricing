@@ -27,7 +27,7 @@ void PricingLibrary::Run()
         Timing::Log(callBegin, callEnd);
         
         const auto setupBegin = Timing::Now();
-        Json json = Json(response);
+        Json json(response);
         const auto setupEnd = Timing::Now();
 
         std::cout << "Setting up: ";

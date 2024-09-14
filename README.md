@@ -1,32 +1,35 @@
-## A C++ library to price items in Hypixel Skyblock
+# A C++ library to price items in Hypixel Skyblock
 
-### Documentation:
+## Documentation
 
 Documentation on how to use and link against this library can be found [here](/docs/usage.md)
 
-### Goals:
+## Goals
 
 - Rewrite my old library with a better api and code practices
 - Possibly improve performance
 - Make linking against the library easier
 
-### Build Process:
+## Build Process
 
-**Prequisites**:
+**Prequisites**
 - CMake 3.20 or higher
 - A C++ compiler that supports C++20
 - Curl
 
-Installing curl on debian-based Linux distros:  
+Installing curl and other dependenies on debian-based Linux distros:  
 ``` sh
 sudo apt install libcurl4-openssl-dev
+sudo apt install cmake  
+sudo apt install gcc  
 ```
 
+Building the project:  
 ``` sh
 cd scripts
 ./release.sh
 ```
-### Licenses:
+## Licenses
 
 This project is licensed under the Apache 2.0 License. Further information can be found in the [NOTICE](/NOTICE.md) file, and the licenses of the
-libraries that this project links against can be found in the [LICENSES](/LICENSES) directory.
+libraries linked against can be found in the [LICENSES](/LICENSES) directory.

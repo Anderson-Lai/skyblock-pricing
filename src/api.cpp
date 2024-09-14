@@ -1,6 +1,5 @@
 #include "api.h"
 #include "log.h"
-#include "conversions.h"
 
 Api::Api(const char* url) : m_curl(curl_easy_init()) 
 {
@@ -77,7 +76,7 @@ std::string& Api::Call(const char* url)
     if (m_result != CURLE_OK)
     {
         Log::Error("Failed to change url for api call");
-        m_buffer = "";
+        m_buffer.clear();
         return m_buffer;
     }
 
@@ -92,7 +91,7 @@ std::string& Api::Call()
     if (m_result != CURLE_OK)
     {
         Log::Error("Failed to call api");
-        m_buffer = "";
+        m_buffer.clear();
     }
 
     return m_buffer;

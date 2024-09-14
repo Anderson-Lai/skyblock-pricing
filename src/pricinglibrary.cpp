@@ -2,7 +2,8 @@
 #include "curl/curl.h"
 #include <clocale>
 #include "api.h"
-#include <iostream>
+#include "simdjson.h"
+#include "timing.h"
 
 void PricingLibrary::Initialize()
 {
@@ -13,7 +14,21 @@ void PricingLibrary::Initialize()
 void PricingLibrary::Run()
 {
     Api caller("https://api.hypixel.net/v2/skyblock/auctions?page=0");
-    std::cout << caller.Call() << "\n";
+
+    while (true)
+    {
+        std::string& response = caller.Call();
+
+        simdjson::ondemand::parser parser;
+        simdjson::padded_string jsonString(response);
+        simdjson::ondemand::document doc = parser.iterate(jsonString);
+        simdjson::ondemand::object jsonObject = doc.get_object();
+
+        simdjson::ondemand::array auctions = jsonObject["auctions"].get_array();
+
+
+        Timing::Sleep(100);
+    }
 }
 
 namespace PricingLibrary

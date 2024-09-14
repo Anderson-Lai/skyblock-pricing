@@ -25,6 +25,7 @@ add_executable(${PROJECT_NAME}
     "${CMAKE_SOURCE_DIR}/src/log.cpp"
     "${CMAKE_SOURCE_DIR}/src/pricinglibrary.cpp"
     "${CMAKE_SOURCE_DIR}/src/item.cpp"
+    "${CMAKE_SOURCE_DIR}/src/timing.cpp"
 )
 
 target_include_directories(${PROJECT_NAME}

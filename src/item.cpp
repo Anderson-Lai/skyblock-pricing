@@ -7,10 +7,10 @@ Item::Item(const std::string_view auctionId, const std::string_view rarity, cons
         const std::string_view itemName, const std::string_view itemLore, const long long price)
     : m_auctionId(auctionId), m_rarity(rarity), m_category(category), m_price(price), m_profit(INT64_MIN)
 {
-    std::string name(itemName);
+    const std::string name(itemName);
     m_itemName = Conversions::ToWideString(name);
 
-    std::string lore(itemLore);
+    const std::string lore(itemLore);
     m_itemLore = Conversions::ToWideString(lore);
 }
 
@@ -30,7 +30,7 @@ void Item::CleanName()
 
 void Item::LowerRarity()
 {
-    size_t index = std::find(Item::s_rarities.begin(), Item::s_rarities.end(),
+    const size_t index = std::find(Item::s_rarities.begin(), Item::s_rarities.end(),
             this->m_rarity) - Item::s_rarities.begin();
     
     if (index > 0)

@@ -7,6 +7,7 @@
 
 class AuctionHouse
 {
+public:
     long long LookupPrice(const std::wstring& itemName) const;
     void ScrapeAuction();
     void ReadFileData(const std::string& fileName);

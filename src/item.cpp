@@ -16,7 +16,11 @@ Item::Item(const std::string_view auctionId, const std::string_view rarity, cons
 
 void Item::CalculateProfit(const AuctionHouse& auctionHouse)
 {
+    const long long price = auctionHouse.LookupPrice(this->m_itemName);
+    this->m_profit = price - this->m_price;
 
+    this->m_profit = price * 0.025f; // creation tax
+    this->m_profit = price * 0.01f; // claiming tax
 }
 
 void Item::CleanName()

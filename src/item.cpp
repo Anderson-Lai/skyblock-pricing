@@ -27,7 +27,7 @@ void Item::CleanName()
 void Item::LowerRarity()
 {
     size_t index = std::find(Item::s_rarities.begin(), Item::s_rarities.end(),
-            this->m_rarity) - s_rarities.begin();
+            this->m_rarity) - Item::s_rarities.begin();
     
     if (index > 0)
     {

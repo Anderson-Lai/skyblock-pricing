@@ -29,7 +29,6 @@ add_executable(${PROJECT_NAME}
     "${CMAKE_SOURCE_DIR}/src/auctionhouse.cpp"
     "${CMAKE_SOURCE_DIR}/src/file.cpp"
     "${CMAKE_SOURCE_DIR}/src/json.cpp"
-    "${CMAKE_SOURCE_DIR}/src/cleaning.cpp"
 )
 
 target_include_directories(${PROJECT_NAME}

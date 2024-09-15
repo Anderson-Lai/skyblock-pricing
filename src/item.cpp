@@ -1,5 +1,6 @@
 #include "item.h"
 #include "conversions.h"
+#include <algorithm>
 #include <cstdint>
 
 Item::Item(const std::string_view auctionId, const std::string_view rarity, const std::string_view category, 
@@ -11,6 +12,51 @@ Item::Item(const std::string_view auctionId, const std::string_view rarity, cons
 
     std::string lore(itemLore);
     m_itemLore = Conversions::ToWideString(lore);
+}
+
+void Item::CalculateProfit(const AuctionHouse& auctionHouse)
+{
+
+}
+
+void Item::CleanName()
+{
+
+}
+
+void Item::LowerRarity()
+{
+    size_t index = std::find(Item::s_rarities.begin(), Item::s_rarities.end(),
+            this->m_rarity) - s_rarities.begin();
+    
+    if (index > 0)
+    {
+        this->m_rarity = Item::s_rarities[index - 1];
+    }
+}
+
+
+bool Item::IsImportantCharacter(const wchar_t character)
+{
+    return std::find(Item::s_importantCharacters.begin(), Item::s_importantCharacters.end(), character)
+        != Item::s_importantCharacters.end();
+}
+
+bool Item::IsDuplicateReforge(const std::wstring& word)
+{
+    return std::find(Item::s_dupliateReforges.begin(), Item::s_dupliateReforges.end(), word)
+        != Item::s_dupliateReforges.end();
+}
+
+bool Item::IsReforge(const std::wstring& word)
+{
+    return std::find(Item::s_reforges.begin(), Item::s_reforges.end(), word)
+        != Item::s_reforges.end();
+}
+
+bool Item::IsRecombobulated(const std::wstring& itemLore)
+{
+    return itemLore.find(L"§ka") != std::string::npos;
 }
 
 inline const std::array<wchar_t, 68> Item::s_importantCharacters = { L'0', L'1', L'2', L'3', L'4', L'5', L'6', L'7', L'8', L'9',

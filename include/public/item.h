@@ -17,11 +17,11 @@ private:
     bool IsReforge(const std::wstring& word);
     bool IsRecombobulated(const std::wstring& itemLore);
 private:
+    std::wstring m_itemName;
+    std::wstring m_itemLore;
     std::string m_auctionId;
     std::string m_rarity;
     std::string m_category; // weapon, armor, misc, etc.
-    std::wstring m_itemName;
-    std::wstring m_itemLore;
     long long m_price;
     long long m_profit;
 private:

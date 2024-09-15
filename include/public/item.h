@@ -12,10 +12,10 @@ private:
     void CleanName();
     void LowerRarity();
 private:
-    bool IsImportantCharacter(const wchar_t character);
-    bool IsDuplicateReforge(const std::wstring& word);
-    bool IsReforge(const std::wstring& word);
-    bool IsRecombobulated(const std::wstring& itemLore);
+    static bool IsImportantCharacter(const wchar_t character);
+    static bool IsDuplicateReforge(const std::wstring& word);
+    static bool IsReforge(const std::wstring& word);
+    static bool IsRecombobulated(const std::wstring& itemLore);
 private:
     std::wstring m_itemName;
     std::wstring m_itemLore;

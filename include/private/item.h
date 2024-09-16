@@ -7,8 +7,10 @@ class Item
 {
 public:
     Item(const std::string_view uuid, const std::string_view rarity, const std::string_view category,
-            const std::string_view itemName, const std::string_view itemLore, const long long price);
+            const std::string_view itemName, const std::string_view itemLore, const long long price,
+            const long long startTime);
     void CalculateProfit(const AuctionHouse& auctionHouse);
+    long long GetStartTime() const;
 private:
     void CleanName();
     void LowerRarity();
@@ -25,6 +27,8 @@ private:
     std::string m_category; // weapon, armor, misc, etc.
     long long m_price;
     long long m_profit;
+    // in seconds since epoch
+    long long m_startTime;
 private:
     static const std::array<wchar_t, 68> s_importantCharacters;
     static const std::array<std::wstring, 10> s_dupliateReforges;

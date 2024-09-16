@@ -4,8 +4,10 @@
 #include <cstdint>
 
 Item::Item(const std::string_view uuid, const std::string_view rarity, const std::string_view category, 
-        const std::string_view itemName, const std::string_view itemLore, const long long price)
-    : m_uuid(uuid), m_rarity(rarity), m_category(category), m_price(price), m_profit(INT64_MIN)
+        const std::string_view itemName, const std::string_view itemLore, const long long price,
+        const long long startTime)
+    : m_uuid(uuid), m_rarity(rarity), m_category(category), m_price(price), 
+    m_profit(INT64_MIN), m_startTime(startTime)
 {
     const std::string name(itemName);
     m_itemName = Conversions::ToWideString(name);
@@ -21,6 +23,11 @@ void Item::CalculateProfit(const AuctionHouse& auctionHouse)
 
     this->m_profit = price * 0.025f; // creation tax
     this->m_profit = price * 0.01f; // claiming tax
+}
+
+long long Item::GetStartTime() const
+{
+    return m_startTime;
 }
 
 void Item::CleanName()

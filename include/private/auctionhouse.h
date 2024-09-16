@@ -4,6 +4,7 @@
 #include <vector>
 #include <queue>
 #include <mutex>
+#include "simdjson.h"
 
 class AuctionHouse
 {
@@ -12,6 +13,9 @@ public:
     void ScrapeAuction();
     void ReadFileData(const std::string& fileName);
     const std::unordered_map<std::wstring, long long>& GetLbins() const;
+private:
+    void ComputeAuctionData();
+    void WriteAuctionPageData(simdjson::ondemand::array& auctions);
 private:
     // contains the data on the entire auction house
     std::unordered_map<std::wstring, 

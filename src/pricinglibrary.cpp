@@ -33,32 +33,42 @@ long long PricingLibrary::GetPrice(const std::wstring& itemName)
 
 std::vector<std::unique_ptr<Item>> PricingLibrary::GetFlips()
 {
+    Log::Println();
+
     const auto callBegin = Timing::Now();
     std::string& response = PricingLibrary::caller.Call();
     const auto callEnd = Timing::Now();
     std::cout << "Calling api: ";
     Timing::Log(callBegin, callEnd);
 
-    const auto setupBegin = Timing::Now();
-    Json json(response);
-    const auto setupEnd = Timing::Now();
-    std::cout << "Setting up: ";
-    Timing::Log(setupBegin, setupEnd);
+    try 
+    {
+        const auto setupBegin = Timing::Now();
+        Json json(response);
 
-    const auto arrayGetBegin = Timing::Now();
-    simdjson::ondemand::array auctions = json.GetObject()["auctions"].get_array();
-    const auto arrayGetEnd = Timing::Now();
-    std::cout << "Getting array: ";
-    Timing::Log(arrayGetBegin, arrayGetEnd);
+        const auto setupEnd = Timing::Now();
+        std::cout << "Setting up: ";
+        Timing::Log(setupBegin, setupEnd);
 
-    const auto filteringAuctionsBegin = Timing::Now();
-    std::vector<std::unique_ptr<Item>> bins = Parsing::RemoveAuctions(auctions);
-    const auto filteringAuctionsEnd = Timing::Now();
-    std::cout << "Removing auctions: ";
-    Timing::Log(filteringAuctionsBegin, filteringAuctionsEnd);
+        const auto arrayGetBegin = Timing::Now();
+        simdjson::ondemand::array auctions = json.GetObject()["auctions"].get_array();
+        const auto arrayGetEnd = Timing::Now();
+        std::cout << "Getting array: ";
+        Timing::Log(arrayGetBegin, arrayGetEnd);
 
-    Log::Println();
-    return bins;
+        const auto filteringAuctionsBegin = Timing::Now();
+        std::vector<std::unique_ptr<Item>> bins = Parsing::RemoveAuctions(auctions);
+        const auto filteringAuctionsEnd = Timing::Now();
+        std::cout << "Removing auctions: ";
+        Timing::Log(filteringAuctionsBegin, filteringAuctionsEnd);
+
+        return bins;
+    }
+    catch (const simdjson::simdjson_error& e)
+    {
+        Log::Error(e.what());
+        return {};
+    }
 }
 
 void PricingLibrary::CleanUp()

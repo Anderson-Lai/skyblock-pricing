@@ -5,5 +5,5 @@
 
 namespace Parsing
 {
-    std::vector<std::unique_ptr<Item>> RemoveAuctions(simdjson::ondemand::array& array);
+    std::vector<std::unique_ptr<Item>> RemoveAuctions(simdjson::ondemand::array& auctions);
 }

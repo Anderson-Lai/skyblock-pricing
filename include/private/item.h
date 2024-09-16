@@ -14,6 +14,7 @@ public:
 private:
     void CleanName();
     void LowerRarity();
+    void RemoveTrailingSpaces();
 private:
     static bool IsImportantCharacter(const wchar_t character);
     static bool IsDuplicateReforge(const std::wstring& word);

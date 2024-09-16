@@ -18,6 +18,7 @@ Item::Item(const std::string_view uuid, const std::string_view rarity, const std
 
 void Item::CalculateProfit(const AuctionHouse& auctionHouse)
 {
+    this->CleanName();
     const long long price = auctionHouse.LookupPrice(this->m_itemName);
     this->m_profit = price - this->m_price;
 
@@ -32,7 +33,146 @@ long long Item::GetStartTime() const
 
 void Item::CleanName()
 {
+    if (Item::IsRecombobulated(this->m_itemLore))
+    {
+        this->LowerRarity();
+    }
 
+    if (this->m_category == "armor" || this->m_category == "weapon" || this->m_category == "misc")
+    {
+        // remove reforges, dungeon stars, pet lvls
+        std::wstringstream splitter(this->m_itemName);
+        this->m_itemName.clear();
+
+        // remove words with non-useful characters
+        std::wstring temp = L"";
+        while (splitter >> temp)
+        {
+            bool isUsefulWord = true;
+            for (size_t i = 0; i < temp.size(); i++)
+            {
+                if (!Item::IsImportantCharacter(temp[i]))
+                {
+                    isUsefulWord = false;
+                    break;
+                }
+            }
+
+            if (!isUsefulWord)
+            {
+                continue;
+            }
+            this->m_itemName += temp + L" ";
+        }
+        this->RemoveTrailingSpaces();
+
+        // reuse resources when cleaning reforges
+        temp.clear();
+        splitter.clear();
+
+        splitter.str(this->m_itemName);
+        std::wstring nextWord = L"";
+
+        // add a space if the name is not empty as 
+        // trailing whitespace has beent trimmed
+        if (!this->m_itemName.empty())
+        {
+            this->m_itemName += L" ";
+        }
+        while (splitter >> temp)
+        {
+            // something like very wise dragon chestplate -> remove the very
+            if (Item::IsDuplicateReforge(temp))
+            {
+                continue;
+            }
+
+            // consider edge cases e.g. Wise Dragon Chestplate stays the
+            // same, whereas Wise Superior Chestplate -> Superior Chestplate 
+            if (temp == L"Wise" || temp == L"Strong" || temp == L"Superior")
+            {
+                splitter >> nextWord;
+                if (nextWord == L"Dragon")
+                {
+                    this->m_itemName += temp + L" " + nextWord;
+                }
+                else 
+                {
+                    this->m_itemName += nextWord;
+                }
+                this->m_itemName += L" ";
+                continue;
+            }
+            else if (temp == L"Heavy")
+            {
+                splitter >> nextWord;
+                if (nextWord == L"Helmet" || nextWord == L"Chestplate" || nextWord == L"Leggings" || nextWord == L"Boots")
+                {
+                    this->m_itemName += temp + L" " + nextWord;
+                }
+                else 
+                {
+                    this->m_itemName += nextWord;
+                }
+                this->m_itemName += L" ";
+                continue;
+            }
+            else if (temp == L"Perfect")
+            {
+                splitter >> nextWord;
+                if (nextWord == L"Helmet" || nextWord == L"Chestplate" || nextWord == L"Leggings" || nextWord == L"Boots")
+                {
+                    this->m_itemName += temp + L" " + nextWord;
+                }
+                else 
+                {
+                    this->m_itemName += nextWord;
+                }
+                this->m_itemName += L" ";
+                continue;
+            }
+            else if (temp == L"Refined")
+            {
+                splitter >> nextWord;
+                if (nextWord == L"Mithril" || nextWord == L"Titanium")
+                {
+                    this->m_itemName += temp + L" " + nextWord;
+                }
+                else 
+                {
+                    this->m_itemName += nextWord;
+                }
+                this->m_itemName += L" ";
+                continue;
+            }
+            else if (temp == L"Great")
+            {
+                splitter >> nextWord;
+                if (nextWord == L"Spook")
+                {
+                    this->m_itemName += temp + L" " + nextWord;
+                }
+                else 
+                {
+                    this->m_itemName += nextWord;
+                }
+                this->m_itemName += L" ";
+                continue;
+            }
+           
+            // fabled hyperion -> hyperion
+            if (Item::IsReforge(temp))
+            {
+                continue;
+            }
+
+            // this is an important word, add it to the cleaned item name
+            this->m_itemName += temp + L" ";
+        }
+        this->RemoveTrailingSpaces();
+    }
+
+    this->m_itemName += L" " + Conversions::ToWideString(this->m_rarity);
 }
 
 void Item::LowerRarity()
@@ -46,6 +186,13 @@ void Item::LowerRarity()
     }
 }
 
+void Item::RemoveTrailingSpaces()
+{
+    while (!this->m_itemName.empty() && this->m_itemName.back() == L' ')
+    {
+        this->m_itemName.pop_back();
+    }
+}
 
 bool Item::IsImportantCharacter(const wchar_t character)
 {

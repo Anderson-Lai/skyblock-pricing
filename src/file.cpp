@@ -52,31 +52,38 @@ void File::WritePrices(const std::string& fileName,
         return;
     }
 
-    Json json(contents);
-    std::unordered_map<std::string, long long> filePrices;
-    simdjson::ondemand::object& object = json.GetObject();
-    for (auto field : object)
+    try 
     {
-        try 
+        Json json(contents);
+        std::unordered_map<std::string, long long> filePrices;
+        simdjson::ondemand::object& object = json.GetObject();
+        for (auto field : object)
         {
-            std::string_view view = field.unescaped_key();
-            filePrices[std::string(view)] = field.value().get_int64();
+            try 
+            {
+                std::string_view view = field.unescaped_key();
+                filePrices[std::string(view)] = field.value().get_int64();
+            }
+            catch (const simdjson::simdjson_error& e) 
+            {
+                Log::Error(std::format("An error occurred while reading the prices of {}: {}", fileName, e.what()));
+            }
         }
-        catch (const simdjson::simdjson_error& e) 
+        
+        std::mutex mtx;
         {
-            Log::Error(std::format("An error occurred while reading the prices of {}: {}", fileName, e.what()));
+            // auction house may still be getting scraped 
+            // asynchronously in the case of slow internet
+            std::unique_lock<std::mutex> lock(mtx);
+            for (const auto& [key, value] : prices)
+            {
+                // values should be clean at this point
+                filePrices[Conversions::ToNarrowString(key)] = value;
+            }
         }
     }
-    
-    std::mutex mtx;
+    catch (const simdjson::simdjson_error& e)
     {
-        // auction house may still be getting scraped 
-        // asynchronously in the case of slow internet
-        std::unique_lock<std::mutex> lock(mtx);
-        for (const auto& [key, value] : prices)
-        {
-            // values should be clean at this point
-            filePrices[Conversions::ToNarrowString(key)] = value;
-        }
+        Log::Error(std::format("An error occurred while writing json data to {}: {}", fileName, e.what()));
     }
 }

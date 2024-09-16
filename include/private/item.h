@@ -5,7 +5,8 @@
 
 class Item
 {
-    Item(const std::string_view auctionId, const std::string_view rarity, const std::string_view category,
+public:
+    Item(const std::string_view uuid, const std::string_view rarity, const std::string_view category,
             const std::string_view itemName, const std::string_view itemLore, const long long price);
     void CalculateProfit(const AuctionHouse& auctionHouse);
 private:
@@ -19,7 +20,7 @@ private:
 private:
     std::wstring m_itemName;
     std::wstring m_itemLore;
-    std::string m_auctionId;
+    std::string m_uuid;
     std::string m_rarity;
     std::string m_category; // weapon, armor, misc, etc.
     long long m_price;

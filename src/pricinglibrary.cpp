@@ -4,6 +4,7 @@
 #include <clocale>
 #include "api.h"
 #include "log.h"
+#include "parsing.h"
 #include "timing.h"
 #include "json.h"
 
@@ -16,7 +17,8 @@ void PricingLibrary::Initialize()
 namespace PricingLibrary
 {
     AuctionHouse auctionHouse;
-    std::vector<std::unique_ptr<Item>> flips;
+    Api caller("https://api.hypixel.net/v2/skyblock/auctions?page=0");
+    const std::string fileName = "lbin.json";
 }
 
 long long PricingLibrary::GetPrice(const std::string& itemName)
@@ -29,42 +31,34 @@ long long PricingLibrary::GetPrice(const std::wstring& itemName)
     return auctionHouse.LookupPrice(itemName);
 }
 
-std::vector<std::unique_ptr<Item>>& PricingLibrary::GetFlips()
+std::vector<std::unique_ptr<Item>> PricingLibrary::GetFlips()
 {
-    return flips; 
-}
+    const auto callBegin = Timing::Now();
+    std::string& response = caller.Call();
+    const auto callEnd = Timing::Now();
+    std::cout << "Calling api: ";
+    Timing::Log(callBegin, callEnd);
 
-void PricingLibrary::Run()
-{
-    Api caller("https://api.hypixel.net/v2/skyblock/auctions?page=0");
-    const std::string fileName = "lbin.json";
+    const auto setupBegin = Timing::Now();
+    Json json(response);
+    const auto setupEnd = Timing::Now();
+    std::cout << "Setting up: ";
+    Timing::Log(setupBegin, setupEnd);
 
-    while (true)
-    {
-        const auto callBegin = Timing::Now();
-        std::string& response = caller.Call();
-        const auto callEnd = Timing::Now();
+    const auto arrayGetBegin = Timing::Now();
+    simdjson::ondemand::array auctions = json.GetObject()["auctions"].get_array();
+    const auto arrayGetEnd = Timing::Now();
+    std::cout << "Getting array: ";
+    Timing::Log(arrayGetBegin, arrayGetEnd);
 
-        std::cout << "Calling api: ";
-        Timing::Log(callBegin, callEnd);
-        
-        const auto setupBegin = Timing::Now();
-        Json json(response);
-        const auto setupEnd = Timing::Now();
+    const auto filteringAuctionsBegin = Timing::Now();
+    std::vector<std::unique_ptr<Item>> bins = Parsing::RemoveAuctions(auctions);
+    const auto filteringAuctionsEnd = Timing::Now();
+    std::cout << "Removing auctions: ";
+    Timing::Log(filteringAuctionsBegin, filteringAuctionsEnd);
 
-        std::cout << "Setting up: ";
-        Timing::Log(setupBegin, setupEnd);
-
-        const auto arrayGetBegin = Timing::Now();
-        simdjson::ondemand::array auctions = json.GetObject()["auctions"].get_array();
-        const auto arrayGetEnd = Timing::Now();
-
-        std::cout << "Getting array: ";
-        Timing::Log(arrayGetBegin, arrayGetEnd);
-
-        Log::Println();
-        Timing::Sleep(100);
-    }
+    Log::Println();
+    return bins;
 }
 
 void PricingLibrary::CleanUp()

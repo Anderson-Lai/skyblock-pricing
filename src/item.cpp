@@ -3,9 +3,9 @@
 #include <algorithm>
 #include <cstdint>
 
-Item::Item(const std::string_view auctionId, const std::string_view rarity, const std::string_view category, 
+Item::Item(const std::string_view uuid, const std::string_view rarity, const std::string_view category, 
         const std::string_view itemName, const std::string_view itemLore, const long long price)
-    : m_auctionId(auctionId), m_rarity(rarity), m_category(category), m_price(price), m_profit(INT64_MIN)
+    : m_uuid(uuid), m_rarity(rarity), m_category(category), m_price(price), m_profit(INT64_MIN)
 {
     const std::string name(itemName);
     m_itemName = Conversions::ToWideString(name);

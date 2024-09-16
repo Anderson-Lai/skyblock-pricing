@@ -8,17 +8,17 @@
 #include "timing.h"
 #include "json.h"
 
-void PricingLibrary::Initialize()
-{
-    curl_global_init(CURL_GLOBAL_DEFAULT); 
-    std::setlocale(LC_ALL, "en_US.utf8");
-}
-
 namespace PricingLibrary
 {
     AuctionHouse auctionHouse;
     Api caller("https://api.hypixel.net/v2/skyblock/auctions?page=0");
     const std::string fileName = "lbin.json";
+}
+
+void PricingLibrary::Initialize()
+{
+    curl_global_init(CURL_GLOBAL_DEFAULT); 
+    std::setlocale(LC_ALL, "en_US.utf8");
 }
 
 long long PricingLibrary::GetPrice(const std::string& itemName)

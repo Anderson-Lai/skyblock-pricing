@@ -1,9 +1,9 @@
 #pragma once
+#include <shared_mutex>
 #include <string>
 #include <unordered_map>
 #include <vector>
 #include <queue>
-#include <mutex>
 #include "simdjson.h"
 
 class AuctionHouse
@@ -22,5 +22,5 @@ private:
         std::priority_queue<long long, std::vector<long long>, std::greater<long long>>> m_auctionData;
     // contains only the lbins of items
     std::unordered_map<std::wstring, long long> m_lbins;
-    std::mutex m_mutex;
+    std::shared_mutex m_mutex;
 };

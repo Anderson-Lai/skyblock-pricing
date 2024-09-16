@@ -34,7 +34,7 @@ long long PricingLibrary::GetPrice(const std::wstring& itemName)
 std::vector<std::unique_ptr<Item>> PricingLibrary::GetFlips()
 {
     const auto callBegin = Timing::Now();
-    std::string& response = caller.Call();
+    std::string& response = PricingLibrary::caller.Call();
     const auto callEnd = Timing::Now();
     std::cout << "Calling api: ";
     Timing::Log(callBegin, callEnd);

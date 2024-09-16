@@ -48,3 +48,11 @@ std::vector<std::unique_ptr<Item>> Parsing::RemoveOldBins(std::vector<std::uniqu
     filtered.shrink_to_fit();
     return filtered;
 }
+
+void Parsing::CalculateProfit(std::vector<std::unique_ptr<Item>>&& recentBins, const AuctionHouse& auctionHouse)
+{
+    for (auto& bin : recentBins)
+    {
+        bin->CalculateProfit(auctionHouse);
+    }
+}

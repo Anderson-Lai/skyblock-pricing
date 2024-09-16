@@ -62,9 +62,9 @@ void File::WritePrices(const std::string& fileName,
             std::string_view view = field.unescaped_key();
             filePrices[std::string(view)] = field.value().get_int64();
         }
-        catch (...)
+        catch (const simdjson::simdjson_error& e) 
         {
-            Log::Error(std::format("An error occurred while reading the prices of {}", fileName));
+            Log::Error(std::format("An error occurred while reading the prices of {}: {}", fileName, e.what()));
         }
     }
     

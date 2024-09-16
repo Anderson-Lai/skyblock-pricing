@@ -1,5 +1,6 @@
 #include "parsing.h"
 #include "log.h"
+#include <format>
 
 std::vector<std::unique_ptr<Item>> Parsing::RemoveAuctions(simdjson::ondemand::array& auctions)
 {
@@ -21,9 +22,9 @@ std::vector<std::unique_ptr<Item>> Parsing::RemoveAuctions(simdjson::ondemand::a
             
             recentFlips.emplace_back(std::make_unique<Item>(uuid, rarity, category, itemName, itemLore, price));
         }
-        catch (...)
+        catch (const simdjson::simdjson_error& e) 
         {
-            Log::Error("Error while filtering old bins");
+            Log::Error(std::format("Error while filtering old bins: {}", e.what()));
         }
     }
     return recentFlips;

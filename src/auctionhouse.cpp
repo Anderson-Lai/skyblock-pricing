@@ -55,9 +55,9 @@ void AuctionHouse::ScrapeAuction()
             {
                 future.get();
             }
-            catch (...)
+            catch (const simdjson::simdjson_error& e) 
             {
-                Log::Error("An error occurred while scraping the auction house");
+                Log::Error(std::format("An error occurred while scraping the auction house: {}", e.what()));
             }
         }
 

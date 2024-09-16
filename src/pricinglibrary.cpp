@@ -1,4 +1,5 @@
 #include "pricinglibrary.h"
+#include "conversions.h"
 #include "curl/curl.h"
 #include <clocale>
 #include "api.h"
@@ -10,6 +11,27 @@ void PricingLibrary::Initialize()
 {
     curl_global_init(CURL_GLOBAL_DEFAULT); 
     std::setlocale(LC_ALL, "en_US.utf8");
+}
+
+namespace PricingLibrary
+{
+    AuctionHouse auctionHouse;
+    std::vector<std::unique_ptr<Item>> flips;
+}
+
+long long PricingLibrary::GetPrice(const std::string& itemName)
+{
+    return PricingLibrary::GetPrice(Conversions::ToWideString(itemName));
+}
+
+long long PricingLibrary::GetPrice(const std::wstring& itemName)
+{
+    return auctionHouse.LookupPrice(itemName);
+}
+
+std::vector<std::unique_ptr<Item>>& PricingLibrary::GetFlips()
+{
+    return flips; 
 }
 
 void PricingLibrary::Run()
@@ -43,16 +65,6 @@ void PricingLibrary::Run()
         Log::Println();
         Timing::Sleep(100);
     }
-}
-
-namespace PricingLibrary
-{
-    inline std::vector<std::unique_ptr<Item>> flips;
-}
-
-std::vector<std::unique_ptr<Item>>& PricingLibrary::GetFlips()
-{
-    return flips; 
 }
 
 void PricingLibrary::CleanUp()

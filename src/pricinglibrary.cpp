@@ -67,7 +67,7 @@ std::vector<std::unique_ptr<Item>> PricingLibrary::GetFlips()
     catch (const simdjson::simdjson_error& e)
     {
         Log::Error(e.what());
-        return {};
+        return std::vector<std::unique_ptr<Item>>();
     }
 }
 

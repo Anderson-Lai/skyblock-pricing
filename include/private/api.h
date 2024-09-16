@@ -5,6 +5,7 @@
 class Api 
 {
 public:
+    Api();
     Api(const char* url);
     ~Api();
     std::string& Call();

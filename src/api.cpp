@@ -1,6 +1,11 @@
 #include "api.h"
 #include "log.h"
 
+Api::Api() : Api("")
+{
+
+}
+
 Api::Api(const char* url) : m_curl(curl_easy_init()) 
 {
     if (!m_curl)

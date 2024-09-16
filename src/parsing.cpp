@@ -1,6 +1,7 @@
 #include "parsing.h"
 #include "log.h"
 #include <format>
+#include "timing.h"
 
 std::vector<std::unique_ptr<Item>> Parsing::RemoveAuctions(simdjson::ondemand::array& auctions)
 {
@@ -28,4 +29,22 @@ std::vector<std::unique_ptr<Item>> Parsing::RemoveAuctions(simdjson::ondemand::a
         }
     }
     return recentFlips;
+}
+
+std::vector<std::unique_ptr<Item>> Parsing::RemoveOldBins(std::vector<std::unique_ptr<Item>>&& bins)
+{
+    std::vector<std::unique_ptr<Item>> filtered;
+    filtered.reserve(bins.size());
+
+    const unsigned long long secondsSinceEpoch = Timing::SecondsSinceEpoch();
+    for (auto& bin : bins)
+    {
+        if (secondsSinceEpoch - bin->GetStartTime() < 65)
+        {
+            filtered.emplace_back(std::move(bin));
+        }
+    }
+
+    filtered.shrink_to_fit();
+    return filtered;
 }

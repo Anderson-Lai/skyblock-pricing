@@ -5,6 +5,7 @@
 #include <format>
 #include <string>
 #include "json.h"
+#include <map>
 
 int File::CreateFile(const std::string& fileName)
 {
@@ -63,7 +64,7 @@ void File::WritePrices(const std::string& fileName,
     try 
     {
         Json json(contents);
-        std::unordered_map<std::string, long long> filePrices;
+        std::map<std::string, long long> filePrices;
         simdjson::ondemand::object& object = json.GetObject();
         for (auto field : object)
         {
@@ -93,7 +94,7 @@ void File::WritePrices(const std::string& fileName,
         std::string fileData = "{\n";
         for (const auto& [key, value] : filePrices)
         {
-            fileData += std::format("\t\"{}\": {},\n", key, value);
+            fileData += std::format("    \"{}\": {},\n", key, value);
         }
 
         // remove the trailing comma and add back the newline character

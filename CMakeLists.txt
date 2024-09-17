@@ -44,7 +44,7 @@ target_include_directories(${PROJECT_NAME}
 if (MSVC) 
     target_compile_options(${PROJECT_NAME} PUBLIC
         $<$<CONFIG:Debug>:/MDd>
-        $<$<CONFIG:Release>:/MD /DNDEBUG>
+        $<$<CONFIG:Release>:/MD /DNDEBUG /O2>
     )
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     target_compile_options(${PROJECT_NAME} PUBLIC 

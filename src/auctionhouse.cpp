@@ -39,13 +39,14 @@ void AuctionHouse::ScrapeAuction()
 
         for (int i = 2; i < pages; i++)
         {
-            Api call(std::format("https://api.hypixel.net/v2/skyblock/auctions?page={}", i).c_str());
-            Json result(call.Call());
-
-            simdjson::ondemand::object& obj = result.GetObject();
-            simdjson::ondemand::array auctions = obj["auctions"].get_array();
-            calls.emplace_back(std::async(std::launch::async, [this, &auctions]()
+            calls.emplace_back(std::async(std::launch::async, [this, i]()
                         {
+                            Api call(std::format("https://api.hypixel.net/v2/skyblock/auctions?page={}", i).c_str());
+
+                            Json result(call.Call());
+
+                            simdjson::ondemand::object& obj = result.GetObject();
+                            simdjson::ondemand::array auctions = obj["auctions"].get_array();
                             this->WriteAuctionPageData(auctions);
                         }));
         }

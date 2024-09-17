@@ -10,7 +10,8 @@ int main()
         return 1;
     }
 
-    while (true)
+    int counter = 0;
+    while (counter == 0)
     {
         if (Timing::CurrentSecondInMinute() == 0)
         {
@@ -28,6 +29,7 @@ int main()
                 );
             }
 
+            counter++;
             Timing::Sleep(1'500);
         }
 

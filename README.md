@@ -8,7 +8,7 @@ Documentation on how to use and link against this library can be found [here](/d
 
 - [x] Rewrite my old library with a better api and code practices
 - [x] Possibly improve performance
-- [] Make linking against the library easier
+- [ ] Make linking against the library easier
 
 ## Build Process
 

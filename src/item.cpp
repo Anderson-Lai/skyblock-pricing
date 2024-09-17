@@ -63,42 +63,9 @@ void Item::CleanName()
         // remove reforges, dungeon stars, pet lvls
         std::wstringstream splitter(this->m_itemName);
         this->m_itemName.clear();
+        std::wstring temp;
+        std::wstring nextWord;
 
-        // remove words with non-useful characters
-        std::wstring temp = L"";
-        while (splitter >> temp)
-        {
-            bool isUsefulWord = true;
-            for (size_t i = 0; i < temp.size(); i++)
-            {
-                if (!Item::IsImportantCharacter(temp[i]))
-                {
-                    isUsefulWord = false;
-                    break;
-                }
-            }
-
-            if (!isUsefulWord)
-            {
-                continue;
-            }
-            this->m_itemName += temp + L" ";
-        }
-        this->RemoveTrailingSpaces();
-
-        // reuse resources when cleaning reforges
-        temp.clear();
-        splitter.clear();
-
-        splitter.str(this->m_itemName);
-        std::wstring nextWord = L"";
-
-        // add a space if the name is not empty as 
-        // trailing whitespace has beent trimmed
-        if (!this->m_itemName.empty())
-        {
-            this->m_itemName += L" ";
-        }
         while (splitter >> temp)
         {
             // something like very wise dragon chestplate -> remove the very
@@ -182,6 +149,21 @@ void Item::CleanName()
            
             // fabled hyperion -> hyperion
             if (Item::IsReforge(temp))
+            {
+                continue;
+            }
+            
+            // remove all words without important characters
+            bool useful = true;
+            for (size_t i = 0; i < temp.size(); i++)
+            {
+                if (!Item::IsImportantCharacter(temp[i]))
+                {
+                    useful = false;
+                    break;
+                }
+            }
+            if (!useful)
             {
                 continue;
             }

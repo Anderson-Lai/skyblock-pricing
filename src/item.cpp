@@ -26,6 +26,16 @@ void Item::CalculateProfit(const AuctionHouse& auctionHouse)
     this->m_profit = price * 0.01f; // claiming tax
 }
 
+const std::wstring& Item::GetName() const
+{
+    return this->m_itemName;
+}
+
+long long Item::GetPrice() const 
+{
+    return this->m_price;
+}
+
 long long Item::GetStartTime() const
 {
     return m_startTime;

@@ -10,6 +10,8 @@ public:
             const std::string_view itemName, const std::string_view itemLore, const long long price,
             const long long startTime);
     void CalculateProfit(const AuctionHouse& auctionHouse);
+    const std::wstring& GetName() const;
+    long long GetPrice() const;
     long long GetStartTime() const;
 private:
     void CleanName();

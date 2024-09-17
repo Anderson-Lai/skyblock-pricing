@@ -10,7 +10,9 @@ int main()
         return 1;
     }
 
-    while (true)
+    int counter = 0;
+    const int iterations = 3;
+    while (counter < iterations)
     {
         if (Timing::CurrentSecondInMinute() == 0)
         {
@@ -28,6 +30,7 @@ int main()
                 );
             }
 
+            counter++;
             Timing::Sleep(1'500);
         }
 

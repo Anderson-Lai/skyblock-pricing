@@ -9,3 +9,5 @@ bin/
 CMakePresets.json
 compile_commands.json
 .cache/
+
+**/lbin.json

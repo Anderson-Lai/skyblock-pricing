@@ -2,6 +2,7 @@
 #include "log.h"
 #include <format>
 #include "timing.h"
+#include <algorithm>
 
 std::vector<std::unique_ptr<Item>> Parsing::RemoveAuctions(simdjson::ondemand::array& auctions)
 {
@@ -55,4 +56,26 @@ void Parsing::CalculateProfit(std::vector<std::unique_ptr<Item>>&& recentBins, c
     {
         bin->CalculateProfit(auctionHouse);
     }
+}
+
+std::vector<std::unique_ptr<Item>> Parsing::FindFlips(std::vector<std::unique_ptr<Item>>&& recentBins,
+        const AuctionHouse& auctionHouse, const unsigned long long minimumProfit)
+{
+    std::vector<std::unique_ptr<Item>> profitable;
+
+    for (auto& bin : recentBins)
+    {
+        bin->CalculateProfit(auctionHouse);
+        if (static_cast<unsigned long long>(bin->GetProfit()) >= minimumProfit)
+        {
+            profitable.push_back(std::move(bin));
+        }
+    }
+
+    std::sort(profitable.begin(), profitable.end(), [](const std::unique_ptr<Item>& first,
+                const std::unique_ptr<Item>& second)
+            {
+                return first->GetProfit() < second->GetProfit();
+            });
+    return profitable;
 }

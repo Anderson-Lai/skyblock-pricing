@@ -31,9 +31,19 @@ const std::wstring& Item::GetName() const
     return this->m_itemName;
 }
 
-long long Item::GetPrice() const 
+long long Item::GetPrice() const
 {
     return this->m_price;
+}
+
+long long Item::GetProfit() const
+{
+    return this->m_profit;
+}
+
+const std::string& Item::GetUuid() const
+{
+    return this->m_uuid;
 }
 
 long long Item::GetStartTime() const

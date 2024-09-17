@@ -1,19 +1,40 @@
+#include "conversions.h"
 #include "pricinglibrary.h"
 #include "timing.h"
 #include "log.h"
 
 int main()
 {
-    PricingLibrary::Initialize();
+    if (PricingLibrary::Initialize())
+    {
+        return 1;
+    }
+
     while (true)
     {
-        auto bins = PricingLibrary::GetFlips();
-        for (const auto& bin : bins)
+        const auto secondsSinceEpoch = Timing::SecondsSinceEpoch();
+        const auto secondsToMinute = secondsSinceEpoch % 60;
+
+        if (secondsToMinute == 0)
         {
-            Log::Println(std::format("{}", bin->GetStartTime())); 
+            const std::vector<std::unique_ptr<Item>> bins = PricingLibrary::GetFlips();
+            Log::Println();
+            
+            for (const auto& bin : bins)
+            {
+                Log::Println(
+                    std::format(
+                        "Auction uuid: {}\nItem name: {}\nPrice: {}\nProfit: {}\n",
+                        bin->GetUuid(), Conversions::ToNarrowString(bin->GetName()), 
+                        bin->GetPrice(), bin->GetProfit()
+                    )
+                );
+            }
         }
+
         Timing::Sleep(100);
     }
+
     PricingLibrary::CleanUp();
     return 0;
 }

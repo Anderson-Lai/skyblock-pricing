@@ -72,21 +72,28 @@ void AuctionHouse::ScrapeAuction()
 
 void AuctionHouse::ReadFileData(const std::string& fileName)
 {
-    std::string contents = File::ReadFile(fileName);
-    Json json(contents);
-    simdjson::ondemand::object& object = json.GetObject();
-
-    for (auto field : object)
+    try
     {
-        try 
-        {   
-            std::string key(static_cast<std::string_view>(field.unescaped_key()));
-            this->m_lbins[Conversions::ToWideString(key)] = field.value().get_int64();
-        }
-        catch (...)
+        std::string contents = File::ReadFile(fileName);
+        Json json(contents);
+        simdjson::ondemand::object& object = json.GetObject();
+
+        for (auto field : object)
         {
-            Log::Error(std::format("An error occurred while reading the contents of {} to seed in past data", fileName));
+            try 
+            {   
+                std::string key(static_cast<std::string_view>(field.unescaped_key()));
+                this->m_lbins[Conversions::ToWideString(key)] = field.value().get_int64();
+            }
+            catch (...)
+            {
+                Log::Error(std::format("An error occurred while reading the contents of {} to seed in past data", fileName));
+            }
         }
+    }
+    catch (const simdjson::simdjson_error& e)
+    {
+        Log::Error(std::format("An error occurred while reading the JSON contents of {}: {}", fileName, e.what()));
     }
 }
 

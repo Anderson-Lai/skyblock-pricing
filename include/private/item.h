@@ -12,6 +12,8 @@ public:
     void CalculateProfit(const AuctionHouse& auctionHouse);
     const std::wstring& GetName() const;
     long long GetPrice() const;
+    long long GetProfit() const;
+    const std::string& GetUuid() const;
     long long GetStartTime() const;
 private:
     void CleanName();

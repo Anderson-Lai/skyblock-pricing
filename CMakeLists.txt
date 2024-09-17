@@ -44,16 +44,16 @@ target_include_directories(${PROJECT_NAME}
 if (MSVC) 
     target_compile_options(${PROJECT_NAME} PUBLIC
         $<$<CONFIG:Debug>:/MDd>
-        $<$<CONFIG:Release>:/MD>
+        $<$<CONFIG:Release>:/MD /DNDEBUG>
     )
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     target_compile_options(${PROJECT_NAME} PUBLIC 
         $<$<CONFIG:Debug>:-ggdb -pthread -Wall -Wpedantic -Wextra -fsanitize=address>
-        $<$<CONFIG:Release>:-O3 -s -pthread>
+        $<$<CONFIG:Release>:-O3 -s -pthread -DNDEBUG>
     )
     target_link_options(${PROJECT_NAME} PUBLIC
         $<$<CONFIG:Debug>:-ggdb -pthread -Wall -Wpedantic -Wextra -fsanitize=address>
-        $<$<CONFIG:Release>:-O3 -s -pthread>
+        $<$<CONFIG:Release>:-O3 -s -pthread -DNDEBUG>
     )
 else ()
     message(FATAL_ERROR "Your compiler is not supported")

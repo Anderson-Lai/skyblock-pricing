@@ -2,12 +2,12 @@ build/
 out/
 bin/
 
-.vscode/
-.ccls-cache/
-.vs/
-.idea/
-CMakePresets.json
 compile_commands.json
+.ccls-cache/
 .cache/
+.vscode/
+.idea/
+.vs/
+CMakePresets.json
 
 **/lbin.json

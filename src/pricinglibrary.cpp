@@ -35,10 +35,7 @@ int PricingLibrary::Initialize()
             {
                 while (true)
                 {
-                    const unsigned long long secondsSinceEpoch = Timing::SecondsSinceEpoch();
-                    const int secondsToMinute = secondsSinceEpoch % 60;
-
-                    if (secondsToMinute == 55)
+                    if (Timing::CurrentSecondInMinute() == 55)
                     {
                         const auto fileWriteBegin = Timing::Now();
                         File::WritePrices(PricingLibrary::fileName, PricingLibrary::auctionHouse.GetLbins());
@@ -60,10 +57,7 @@ int PricingLibrary::Initialize()
             {
                 while (true)
                 {
-                    const unsigned long long secondsSinceEpoch = Timing::SecondsSinceEpoch();
-                    const int secondsToMinute = secondsSinceEpoch % 60;
-
-                    if (secondsToMinute == 5)
+                    if (Timing::CurrentSecondInMinute() == 5)
                     {
                         const auto auctionScrapeBegin = Timing::Now();
                         auctionHouse.ScrapeAuction();

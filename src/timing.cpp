@@ -24,3 +24,8 @@ void Timing::Log(const std::chrono::time_point<std::chrono::high_resolution_cloc
     const std::chrono::milliseconds elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
     Log::Println(std::format("{}", elapsed));
 }
+
+unsigned long long Timing::CurrentSecondInMinute()
+{
+    return Timing::SecondsSinceEpoch() % 60;
+}

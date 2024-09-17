@@ -12,10 +12,7 @@ int main()
 
     while (true)
     {
-        const auto secondsSinceEpoch = Timing::SecondsSinceEpoch();
-        const auto secondsToMinute = secondsSinceEpoch % 60;
-
-        if (secondsToMinute == 0)
+        if (Timing::CurrentSecondInMinute() == 0)
         {
             const std::vector<std::unique_ptr<Item>> bins = PricingLibrary::GetFlips();
             Log::Println();

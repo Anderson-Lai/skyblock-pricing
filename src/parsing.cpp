@@ -59,14 +59,14 @@ void Parsing::CalculateProfit(std::vector<std::unique_ptr<Item>>&& recentBins, c
 }
 
 std::vector<std::unique_ptr<Item>> Parsing::FindFlips(std::vector<std::unique_ptr<Item>>&& recentBins,
-        const AuctionHouse& auctionHouse, const unsigned long long minimumProfit)
+        const AuctionHouse& auctionHouse, const long long minimumProfit)
 {
     std::vector<std::unique_ptr<Item>> profitable;
 
     for (auto& bin : recentBins)
     {
         bin->CalculateProfit(auctionHouse);
-        if (static_cast<unsigned long long>(bin->GetProfit()) >= minimumProfit)
+        if (bin->GetProfit() >= minimumProfit)
         {
             profitable.push_back(std::move(bin));
         }

@@ -48,6 +48,8 @@ int PricingLibrary::Initialize()
                         std::cout << "Writing to file: ";
                         Timing::Log(fileWriteBegin, fileWriteEnd);
                         Log::Println();
+
+                        Timing::Sleep(1'500);
                     }
                     Timing::Sleep(100);
                 }
@@ -71,6 +73,8 @@ int PricingLibrary::Initialize()
                         std::cout << "Scraping auction house data: ";
                         Timing::Log(auctionScrapeBegin, auctionScrapeEnd);
                         Log::Println();
+
+                        Timing::Sleep(1'500);
                     }
                     Timing::Sleep(100);
                 }

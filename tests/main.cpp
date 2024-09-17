@@ -30,6 +30,8 @@ int main()
                     )
                 );
             }
+
+            Timing::Sleep(1'500);
         }
 
         Timing::Sleep(100);

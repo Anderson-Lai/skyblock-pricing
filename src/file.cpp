@@ -96,11 +96,10 @@ void File::WritePrices(const std::string& fileName,
             fileData += std::format("\t\"{}\": {},\n", key, value);
         }
 
-        // remove the trailing comma
-        if (fileData.back() == ',')
-        {
-            fileData.pop_back();
-        }
+        // remove the trailing comma and add back the newline character
+        fileData.pop_back();
+        fileData.pop_back();
+        fileData += "\n";
 
         // close the JSON object
         fileData += "}";

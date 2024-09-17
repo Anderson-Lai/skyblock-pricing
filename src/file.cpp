@@ -17,13 +17,17 @@ int File::CreateFile(const std::string& fileName)
         }
     }
 
-    Log::Println(std::format("{} was not found, {} is being created", fileName, fileName));
-    std::ofstream file(fileName);
-    if (file.fail())
     {
-        Log::Error(std::format("Could not create {}", fileName));
-        return 1;
+        Log::Println(std::format("{} was not found, {} is being created", fileName, fileName));
+        std::ofstream file(fileName);
+        if (file.fail())
+        {
+            Log::Error(std::format("Could not create {}", fileName));
+            return 1;
+        }
+        file << "{\n}";
     }
+
     return 0;
 }
 
@@ -37,7 +41,11 @@ std::string File::ReadFile(const std::string& fileName)
     }
 
     std::string contents;
-    file >> contents;
+    std::string temp;
+    while (std::getline(file, temp))
+    {
+        contents += temp;
+    }
     return contents;
 }
 
@@ -81,6 +89,31 @@ void File::WritePrices(const std::string& fileName,
                 filePrices[Conversions::ToNarrowString(key)] = value;
             }
         }
+
+        std::string fileData = "{\n";
+        for (const auto& [key, value] : filePrices)
+        {
+            fileData += std::format("\t\"{}\": {},\n", key, value);
+        }
+
+        // remove the trailing comma
+        if (fileData.back() == ',')
+        {
+            fileData.pop_back();
+        }
+
+        // close the JSON object
+        fileData += "}";
+
+        // open and write to file 
+        std::fstream file(fileName, std::ios::out | std::ios::trunc);
+        if (file.fail())
+        {
+            Log::Error(std::format("Could not open {} to truncate its contents to write new data", fileName));
+            return;
+        }
+
+        file << fileData;
     }
     catch (const simdjson::simdjson_error& e)
     {

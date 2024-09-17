@@ -29,7 +29,8 @@ void AuctionHouse::ScrapeAuction()
         const long long pages = firstObject["totalPages"].get_int64();
         simdjson::ondemand::array auctions = firstObject["auctions"].get_array();
 
-        std::vector<std::future<void>> calls(pages);
+        std::vector<std::future<void>> calls;
+        calls.reserve(pages);
         this->m_auctionData.clear();
         
         calls.emplace_back(std::async(std::launch::async, [this, &auctions]()
@@ -65,9 +66,9 @@ void AuctionHouse::ScrapeAuction()
 
         this->ComputeAuctionData();
     }
-    catch (...)
+    catch (const std::exception& e)
     {
-        Log::Error("An error occurred while scraping the entire auction house for data");
+        Log::Error(std::format("An error occurred while scraping the entire auction house for data: {}", e.what()));
     }
 }
 

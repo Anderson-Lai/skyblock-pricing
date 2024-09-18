@@ -17,10 +17,10 @@ FetchContent_MakeAvailable(simdjson)
 
 find_package(CURL REQUIRED)
 
-add_executable(${PROJECT_NAME}
-    "${CMAKE_SOURCE_DIR}/tests/memoryleak.cpp"
+#add_executable(${PROJECT_NAME}
+#    "${CMAKE_SOURCE_DIR}/tests/memoryleak.cpp"
 #    "${CMAKE_SOURCE_DIR}/tests/main.cpp"
-# add_library(${PROJECT_NAME} STATIC
+add_library(${PROJECT_NAME} STATIC
     "${CMAKE_SOURCE_DIR}/src/api.cpp"
     "${CMAKE_SOURCE_DIR}/src/conversions.cpp"
     "${CMAKE_SOURCE_DIR}/src/log.cpp"

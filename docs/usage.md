@@ -124,5 +124,5 @@ at which the auciton was put up on the in-game auction house, in seconds since t
 
 Do not include this file, as the library manages its own internal AuctionHouse instance which is used to provide simpler APIs to use in place of the AuctionHouse class' API. If 
 you insist on using this header file, read the source code for the [header file](https://github.com/Anderson-Lai/skyblock-pricing/blob/master/include/public/auctionhouse.h)
-and the source code for the [implementation file](https://github.com/Anderson-Lai/skyblock-pricing/blob/master/src/auctionhouse.cpp). This header file is left intentionally 
-undocumented to deter its direct use.
+and the source code for the [implementation file](https://github.com/Anderson-Lai/skyblock-pricing/blob/master/src/auctionhouse.cpp) to understand its API.
+This header file is left intentionally undocumented to deter its direct use.

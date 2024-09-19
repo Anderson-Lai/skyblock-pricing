@@ -17,28 +17,28 @@ FetchContent_MakeAvailable(simdjson)
 
 find_package(CURL REQUIRED)
 
-add_executable(${PROJECT_NAME}
-    "${CMAKE_SOURCE_DIR}/tests/memoryleak.cpp"
-#    "${CMAKE_SOURCE_DIR}/tests/main.cpp"
-# add_library(${PROJECT_NAME} STATIC
-    "${CMAKE_SOURCE_DIR}/src/api.cpp"
-    "${CMAKE_SOURCE_DIR}/src/conversions.cpp"
-    "${CMAKE_SOURCE_DIR}/src/log.cpp"
-    "${CMAKE_SOURCE_DIR}/src/pricinglibrary.cpp"
-    "${CMAKE_SOURCE_DIR}/src/item.cpp"
-    "${CMAKE_SOURCE_DIR}/src/timing.cpp"
-    "${CMAKE_SOURCE_DIR}/src/auctionhouse.cpp"
-    "${CMAKE_SOURCE_DIR}/src/file.cpp"
-    "${CMAKE_SOURCE_DIR}/src/json.cpp"
-    "${CMAKE_SOURCE_DIR}/src/parsing.cpp"
+#add_executable(${PROJECT_NAME}
+#    "${CMAKE_CURRENT_SOURCE_DIR}/tests/memoryleak.cpp"
+#    "${CMAKE_CURRENT_SOURCE_DIR}/tests/main.cpp"
+add_library(${PROJECT_NAME} STATIC
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/api.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/conversions.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/log.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/pricinglibrary.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/item.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/timing.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/auctionhouse.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/file.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/json.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/parsing.cpp"
 )
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC
-        "${CMAKE_SOURCE_DIR}/include/public/"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/public/"
         "${CURL_INCLUDE_DIRS}"
     PRIVATE 
-        "${CMAKE_SOURCE_DIR}/include/private/"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/private/"
 )
 
 if (MSVC) 

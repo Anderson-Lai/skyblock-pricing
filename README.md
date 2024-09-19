@@ -2,7 +2,7 @@
 
 ## Documentation
 
-Documentation on how to use and link against this library can be found [here](/docs/usage.md)
+Documentation on how to use and link against this library can be found [here.](/docs/usage.md)
 
 ## Goals
 

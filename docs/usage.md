@@ -59,14 +59,14 @@ namespace Timing
 }
 ```
 
-Timing::Now() returns the current time relative to an ARBITRARY point in time, thus, it should only be used in timing execution speed.  
+Timing::Now() returns the current time relative to a constant, but ARBITRARY point in time, thus, it should only be used in timing execution speed.  
 
 Timing::Sleep(unsigned long long milliseconds) sleeps the calling thread for the specified number of milliseconds.  
 
 Timing::SecondsSinceEpoch() returns the seconds since the epoch, a fixed, non-arbitrary point in time. Thus, unlike Timing::Now(), it can be used to get the current time. However, 
 it can also be used to time execution speed.  
 
-Timing::Log(const std::chrono::time\_point\<std::chrono::high\_resolution\_clok>& begin, const std::chrono::time\_point\<std::chrono::high\_resolution\_clok>& end) provides a simple
+Timing::Log(const std::chrono::time\_point\<std::chrono::high\_resolution\_clock>& begin, const std::chrono::time\_point\<std::chrono::high\_resolution\_clock>& end) provides a simple
 way to log the return values of Timing::Now(). It will calculate the time difference between those two points in milliseconds, and output it to stdout.  
 
 Timing::CurrentSecondInMinute() returns the current second in the minute, thus, its values will be between [0-59]. It can be combined with PricingLibrary::GetFlips() to get new flips

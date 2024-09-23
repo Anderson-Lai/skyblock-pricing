@@ -48,11 +48,11 @@ if (MSVC)
     )
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     target_compile_options(${PROJECT_NAME} PUBLIC 
-        $<$<CONFIG:Debug>:-ggdb -pthread -Wall -Wpedantic -Wextra -fsanitize=address>
+        $<$<CONFIG:Debug>:-Og -ggdb -pthread -Wall -Wpedantic -Wextra -fsanitize=address>
         $<$<CONFIG:Release>:-O3 -s -pthread -DNDEBUG>
     )
     target_link_options(${PROJECT_NAME} PUBLIC
-        $<$<CONFIG:Debug>:-ggdb -pthread -Wall -Wpedantic -Wextra -fsanitize=address>
+        $<$<CONFIG:Debug>:-Og -ggdb -pthread -Wall -Wpedantic -Wextra -fsanitize=address>
         $<$<CONFIG:Release>:-O3 -s -pthread -DNDEBUG>
     )
 else ()

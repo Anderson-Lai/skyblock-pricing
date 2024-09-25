@@ -38,7 +38,7 @@ int PricingLibrary::Initialize()
                     if (Timing::CurrentSecondInMinute() == 55)
                     {
                         const auto fileWriteBegin = Timing::Now();
-                        File::WritePrices(PricingLibrary::fileName, PricingLibrary::auctionHouse.GetLbins());
+                        File::WritePrices(PricingLibrary::fileName, PricingLibrary::auctionHouse);
                         const auto fileWriteEnd = Timing::Now();
 
                         Log::Println();

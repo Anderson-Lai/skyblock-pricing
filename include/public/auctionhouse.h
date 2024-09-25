@@ -13,6 +13,7 @@ public:
     void ScrapeAuction();
     void ReadFileData(const std::string& fileName);
     const std::unordered_map<std::wstring, long long>& GetLbins() const;
+    std::shared_mutex& GetRwLock() const;
 private:
     void ComputeAuctionData();
     void WriteAuctionPageData(simdjson::ondemand::array& auctions);
@@ -22,5 +23,5 @@ private:
         std::priority_queue<long long, std::vector<long long>, std::greater<long long>>> m_auctionData;
     // contains only the lbins of items
     std::unordered_map<std::wstring, long long> m_lbins;
-    std::shared_mutex m_mutex;
+    mutable std::shared_mutex m_mutex;
 };

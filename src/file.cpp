@@ -50,8 +50,7 @@ std::string File::ReadFile(const std::string& fileName)
     return contents;
 }
 
-void File::WritePrices(const std::string& fileName,
-        const std::unordered_map<std::wstring, long long>& prices)
+void File::WritePrices(const std::string& fileName, const AuctionHouse& auctionHouse)
 {
     std::string contents = File::ReadFile(fileName);
     if (contents == "")
@@ -78,12 +77,12 @@ void File::WritePrices(const std::string& fileName,
                 Log::Error(std::format("An error occurred while reading the prices of {}: {}", fileName, e.what()));
             }
         }
-        
-        std::mutex mtx;
+
         {
             // auction house may still be getting scraped 
             // asynchronously in the case of slow internet
-            std::unique_lock<std::mutex> lock(mtx);
+            std::shared_lock<std::shared_mutex> lock(auctionHouse.GetRwLock());
+            const std::unordered_map<std::wstring, long long>& prices = auctionHouse.GetLbins();
             for (const auto& [key, value] : prices)
             {
                 // values should be clean at this point

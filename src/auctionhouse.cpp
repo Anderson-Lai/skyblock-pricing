@@ -170,3 +170,8 @@ void AuctionHouse::WriteAuctionPageData(simdjson::ondemand::array& auctions)
         this->m_auctionData[bin->GetName()].emplace(bin->GetPrice());
     }
 }
+
+std::shared_mutex& AuctionHouse::GetRwLock() const
+{
+    return this->m_mutex;
+}

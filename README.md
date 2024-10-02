@@ -29,6 +29,16 @@ Building the project:
 cd scripts
 ./release.sh
 ```
+
+Non-Linux build process:
+```
+mkdir build
+cd build
+
+cmake .. -DCMAKE_BUILD_TYPE=Release
+cmake --build . --config Release -j $(nproc)
+```
+
 ## Licenses
 
 This project is licensed under the Apache 2.0 License, and the licenses of libraries linked against can be found in the [LICENSES](/LICENSES)

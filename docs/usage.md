@@ -19,8 +19,7 @@ target_link_libraries(${PROJECT_NAME}
 
 ## Using the library
 
-This library exposes 3 main header files you can use: pricinglibrary.h, timing.h, conversions.h, and in a sense, item.h, although you should never #include it unless you
-absolutely understand what you are doing (auctionhouse.h should almost never be #include 'd, as its API can be used through other, much easier-to-use APIs found in this library).
+This library exposes 3 main header files you can use: pricinglibrary.h, timing.h, and conversions.h.
 
 ### pricinglibrary.h
 
@@ -90,6 +89,7 @@ whereas Linux's and MacOs' are normaly UTF-32).
 Conversions::ToNarrowString(const std::wstring& str) takes in a UTF-16 or UTF-32 encoded string (read above to understand why std::wstring may have different encodings), and returns
 a deep-copied, UTF-8 representation of the string, std::string.
 
+<!--
 ### item.h
 
 ``` cpp
@@ -126,3 +126,4 @@ Do not include this file, as the library manages its own internal AuctionHouse i
 you insist on using this header file, read the source code for the [header file](https://github.com/Anderson-Lai/skyblock-pricing/blob/master/include/public/auctionhouse.h)
 and the source code for the [implementation file](https://github.com/Anderson-Lai/skyblock-pricing/blob/master/src/auctionhouse.cpp) to understand its API.
 This header file is left intentionally undocumented to deter its direct use.
+-->

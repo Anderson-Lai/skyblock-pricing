@@ -1,8 +1,7 @@
 #pragma once
 #include <vector>
 #include <memory>
-
-class Item;
+#include "item.h"
 
 namespace PricingLibrary
 {

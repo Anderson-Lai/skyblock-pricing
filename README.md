@@ -13,9 +13,9 @@ Documentation on how to use and link against this library can be found [here.](/
 ## Build Process
 
 **Prequisites**
-- CMake 3.20 or higher
+- [CMake](https://cmake.org/download/) 3.20 or higher
 - A C++ compiler that supports C++20
-- Curl
+- [Curl](https://curl.se/download.html)
 
 Installing curl and other dependenies on debian-based Linux distros:  
 ``` sh
